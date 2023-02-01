@@ -1,7 +1,8 @@
 import './App.scss';
 
 import React, { useState } from 'react';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import PostPage from './components/PostPage/PostPage';
 import Posts from './components/Posts/Posts';
 
 const App: React.FC = () => {
@@ -11,23 +12,29 @@ const App: React.FC = () => {
     setPage(!page);
   };
 
+  const router = createBrowserRouter([
+    {
+      path: '/',
+      element: <Posts />,
+    },
+    {
+      path: '/:postID',
+      element: <PostPage />,
+    },
+  ]);
+
   return (
     <div className="App">
       <div className="main-page" onClick={handlerOnChange}>
-        <p> <a href="#">Открыть новости</a></p>
+        <p> Открыть новости</p>
       </div>
       {
         page
           ? (
-            <BrowserRouter>
-              <Routes>
-                <Route path="/" element={<Posts />} />
-              </Routes>
-            </BrowserRouter>
+            <RouterProvider router={router} />
           )
           : ''
       }
-
     </div>
   );
 }

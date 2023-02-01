@@ -2,19 +2,16 @@ import './posts.scss';
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { type PostShort } from '@/types/types';
+import PostCard from '../PostCard/PostCard';
 
-type Post = {
-  id: number;
-  title: string;
-  body: string | number;
-};
 
 const Posts: React.FC = () => {
-  const [posts, setPosts] = useState<Post[]>([]);
+  const [posts, setPosts] = useState<PostShort[]>([]);
 
   const fetchPosts = async (): Promise<void> => {
     try {
-      const { data } = await axios.get<Post[]>('http://localhost:3000/posts');
+      const { data } = await axios.get<PostShort[]>('http://localhost:3000/posts');
 
       setPosts(data);
     } catch (error) {
@@ -26,15 +23,11 @@ const Posts: React.FC = () => {
     void fetchPosts();
   }, []);
 
-
   return (
     <div className="posts">
       {posts.map((post) => (
         <>
-          <div className="posts__body" key={post.id} >
-            <div className="posts__title"> {post.title}</div>
-            <div className="posts__description">{post.body}</div>
-          </div>
+          <PostCard key={post.id} id={post.id} title={post.title} body={post.body} />
         </>
       ))}
     </div>
