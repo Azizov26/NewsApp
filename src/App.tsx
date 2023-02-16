@@ -1,7 +1,7 @@
 import './App.scss';
 
 import React, { useState } from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import PostPage from './components/PostPage/PostPage';
 import Posts from './components/Posts/Posts';
 
@@ -12,17 +12,6 @@ const App: React.FC = () => {
     setPage(!page);
   };
 
-  const router = createBrowserRouter([
-    {
-      path: '/',
-      element: <Posts />,
-    },
-    {
-      path: '/:postID',
-      element: <PostPage />,
-    },
-  ]);
-
   return (
     <div className="App">
       <div className="main-page" onClick={handlerOnChange}>
@@ -31,7 +20,12 @@ const App: React.FC = () => {
       {
         page
           ? (
-            <RouterProvider router={router} />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Posts />} />
+                <Route path="/posts/:postID" element={<PostPage />} />
+              </Routes>
+            </BrowserRouter>
           )
           : ''
       }

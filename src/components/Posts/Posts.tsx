@@ -27,12 +27,10 @@ const Posts: React.FC = () => {
     <div className="posts">
       {posts.map((post) => (
         <>
-          <PostCard key={post.id} id={post.id} title={post.title} body={post.body} />
+          <PostCard key={post.title} id={post.id} title={post.title} body={post.body} />
         </>
       ))}
     </div>
-
-
   );
 };
 

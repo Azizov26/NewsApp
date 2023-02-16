@@ -1,3 +1,11 @@
+# start
+
+json-server --watch db.json 
+
+error ? npx kill-port 3000 : null
+
+npm start
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

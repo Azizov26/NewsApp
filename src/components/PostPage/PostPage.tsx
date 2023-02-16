@@ -1,19 +1,22 @@
+/* eslint-disable array-callback-return */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
-import { type Post } from '@/types/types';
+import { type PostShort } from '@/types/types';
 
 
 const PostPage: React.FC = () => {
-  const { id: postID } = useParams();
-  const [postInfo, setPostInfo] = useState<Post | null>(null);
+  const { postID } = useParams();
+  const [postInfo, setPostInfo] = useState<PostShort | undefined>(undefined);
 
   const request = async (): Promise<void> => {
     try {
-      const { data } = await axios.get<Post[]>(`http://localhost:3000/posts/${postID}`);
+      const { data } = await axios.get<PostShort>(`http://localhost:3000/posts/${postID}`);
 
-      setPostInfo(data[0]);
+      setPostInfo(data);
+
+      console.log(data);
     } catch (error) {
       console.log(error);
     }
@@ -22,17 +25,20 @@ const PostPage: React.FC = () => {
   useEffect(() => {
     void request();
   }, []);
-  console.log('###', postInfo);
+  console.log('### postInfo', postInfo);
+
+  if (postInfo === undefined) {
+    return null;
+  }
 
   return (
     <div>
-      <div className="posts__body" >
-        <div className="posts__title"> {postInfo}</div>
-        <div className="posts__description">{postInfo.body}</div>
-        {/* <div className="posts__description">{postInfo.author.likes}</div> */}
-
-        {/* <div className="posts__description">{new Date(postInfo.createdAt)}</div>
-        <div className="posts__description">{new Date(postInfo.updatedAt)}</div> */}
+      <div className="page__title">
+        <>
+          <div className="info__title">{postInfo.title}</div>;
+          <div className="info__title">{postInfo.id}</div>;
+          <div className="info__title">{postInfo.body}</div>;
+        </>
       </div>
     </div>
   );
