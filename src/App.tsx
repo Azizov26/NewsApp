@@ -14,8 +14,8 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <div className="main-page" onClick={handlerOnChange}>
-        <p> Открыть новости</p>
+      <div className="App__main-page" onClick={handlerOnChange}>
+        <button> Открыть новости</button>
       </div>
       {
         page
@@ -27,7 +27,7 @@ const App: React.FC = () => {
               </Routes>
             </BrowserRouter>
           )
-          : ''
+          : <div className="App__nonews">Новости не открыты</div>
       }
     </div>
   );
