@@ -27,7 +27,6 @@ const PostPage: React.FC = () => {
   useEffect(() => {
     void request();
   }, []);
-  console.log('### postInfo', postInfo);
 
   if (postInfo === undefined) {
     return null;
